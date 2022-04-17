@@ -3,7 +3,7 @@
     v-card(v-for="model of models")
       v-card-title {{model.name}}
       v-card-subtitle  {{model.version}}
-      v-card-text gi
+      v-card-text hi
 </template>
 
 <script>
