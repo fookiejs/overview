@@ -1,6 +1,9 @@
 <template lang="pug">
-  div 
-    pre 
+  div(class="") 
+    v-card(v-for="model of models")
+      v-card-title {{model.name}}
+      v-card-subtitle  {{model.version}}
+      v-card-text gi
 </template>
 
 <script>
@@ -20,10 +23,14 @@ export default {
       token,
       model: "model",
       method: "read",
+      query: {
+        filter: {},
+        attributes: [],
+      },
     });
-    console.log(res);
+    console.log(res.data);
     if (res.data.status) {
-      this.models = res.data;
+      this.models = res.data.data;
     } else {
     }
   },
