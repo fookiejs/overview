@@ -3,8 +3,8 @@
 
 name: Build & Deploy
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ main ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,4 +25,4 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy
-        run: aws s3 sync ./dist s3://fookie-doc
+        run: aws s3 sync ./dist s3://doc.fookiejs.com
