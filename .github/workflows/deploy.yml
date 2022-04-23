@@ -26,4 +26,4 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy
-        run: aws s3 sync ./dist s3://doc.fookiejs.com
+        run: aws s3 sync ./dist s3://fookie-doc
