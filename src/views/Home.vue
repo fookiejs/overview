@@ -28,11 +28,11 @@
                   v-card-text(class="tw-flex")                 
                     span(class="tw-italic") required 
                     v-spacer
-                    v-chip( small :color="field.required ? 'green' : 'red' " dark) {{ field.required || "false"}}
+                    v-chip( small :color="field.required ? '#2E7D32' : '#DD2C00' " dark) {{ field.required || "false"}}
                   v-card-text(class="tw-flex")                 
                     span(class="tw-italic") unique 
                     v-spacer
-                    v-chip( small :color="field.unique ? 'green' : 'red' " dark) {{ field.unique || "false"}}
+                    v-chip( small :color="field.unique ? '#2E7D32' : '#DD2C00' " dark) {{ field.unique || "false"}}
                   v-card-text(class="tw-flex")                 
                     span(class="tw-italic") default 
                     v-spacer
@@ -64,6 +64,24 @@
                     v-chip(v-for="item of obj[arr]" small dark) {{item}}
             span(class="tw-text-3xl") Role            
             v-divider
+            v-card-text
+              div( class="tw-flex tw-grid tw-grid-cols-1 tw-gap-4")
+                v-card(v-for="obj,method of model.lifecycle" outlined )
+                  v-card-text 
+                    span(class="tw-font-bold") {{method}}
+                  v-divider                   
+                  v-card-text
+                  v-stepper(v-model="step")
+                    v-stepper-head
+                      v-stepper-step(v-for="role,i of obj.role" :step="i") {{role}}
+                    v-stepper-items
+                      v-stepper-content(v-for="role,i of obj.role" :step="i")
+                        div(v-if="false")
+                          div accept
+                          v-chip(v-for="item of obj.accept[role]" small dark) {{item}}
+                        div(v-if="false")
+                          div reject
+                          v-chip(v-for="item of obj.reject[role]" small dark) {{item}}
 
               
 
@@ -76,6 +94,7 @@ import lodash from "lodash";
 export default {
   data() {
     return {
+      step: 0,
       tab: 0,
       url: "http://localhost:2630",
       token: "admin",
