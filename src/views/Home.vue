@@ -61,31 +61,31 @@
                   v-divider                   
                   v-card-text(v-for="arr of ['preRule','modify','rule','filter','effect']") 
                     div(class="tw-italic") {{arr}}
-                    v-chip(v-for="item of obj[arr]" small dark) {{item}}
+                    v-chip(class="tw-m-1" v-for="item of obj[arr]" small dark) {{item}}
             span(class="tw-text-3xl") Role            
             v-divider
             v-card-text
-              div( class="tw-flex tw-grid tw-grid-cols-1 tw-gap-4")
+              div( class="tw-flex tw-grid tw-grid-cols-2 tw-gap-4")
                 v-card(v-for="obj,method of model.lifecycle" outlined )
                   v-card-text 
                     span(class="tw-font-bold") {{method}}
                   v-divider                   
                   v-card-text
-                  v-stepper(v-model="step")
-                    v-stepper-head
-                      v-stepper-step(v-for="role,i of obj.role" :step="i") {{role}}
-                    v-stepper-items
-                      v-stepper-content(v-for="role,i of obj.role" :step="i")
-                        div(v-if="false")
-                          div accept
-                          v-chip(v-for="item of obj.accept[role]" small dark) {{item}}
-                        div(v-if="false")
-                          div reject
-                          v-chip(v-for="item of obj.reject[role]" small dark) {{item}}
+                  v-timeline(v-model="step" dense)
+                      v-timeline-item(v-for="role,i of obj.role" :step="i"  icon="mdi-chevron-down" color="grey")
+                        v-card(width="350")
+                          v-card-text 
+                            span(class="tw-font-bold") {{role}}
+                          v-divider
+                          v-card-text(v-if="obj.accept && obj.accept[role] ")
+                            div Accept
+                            v-chip(v-for="item of obj.accept[role]" small dark ) {{item}}
+                          v-card-text(v-if="obj.reject && obj.reject[role] ")
+                            div Reject
+                            v-chip(v-for="item of obj.reject[role]" small dark ) {{item}}
 
-              
-
-              
+                              
+           
 </template>
 
 <script>
@@ -96,7 +96,6 @@ export default {
     return {
       step: 0,
       tab: 0,
-      url: "http://localhost:2630",
       token: "admin",
       models: [],
     };
@@ -115,8 +114,16 @@ export default {
     },
   },
   mounted: async function () {
+    let port = "2626";
+    let host = "localhost";
+    let protocol = "http";
+    if (this.$route.query.port) port = this.$route.query.port;
+    if (this.$route.query.host) host = this.$route.query.host;
+    if (this.$route.query.protocol) protocol = this.$route.query.protocol;
+
     let token = this.token;
-    let url = this.url;
+    let url = `${protocol}://${host}:${port}`;
+    console.log(url);
     let res = await axios.post(url, {
       token,
       model: "model",
@@ -125,7 +132,6 @@ export default {
         filter: {},
       },
     });
-    console.log(res.data);
     if (res.data.status) {
       this.models = res.data.data;
     } else {
