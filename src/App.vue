@@ -5,10 +5,10 @@ v-app(app)
       v-row(align="center")
           v-app-bar-nav-icon 
             v-img(src="./assets/logo.png" max-height="32" contain)
-          v-app-bar-title() Fookie.js DOC
+          v-app-bar-title() Fookie.js Overview
           v-spacer      
   v-main(app)
-    v-container(app)
+    v-container(app class="tw-h-full")
       router-view
   v-footer(padless)
     v-card(flat tile width="100%" class="tw-text-center")
