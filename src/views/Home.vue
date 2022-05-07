@@ -36,7 +36,7 @@ export default {
         },
       });
       if (res.status == 200) {
-        this.$store.state.models = res.data.data;
+        this.$store.state.models.model = res.data.data;
         this.loading = false;
         this.$router.push({
           name: "overview",

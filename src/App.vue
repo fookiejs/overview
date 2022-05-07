@@ -12,14 +12,12 @@ v-app(app)
           v-btn(icon @click="darkmode = !darkmode")
             v-icon {{darkmode ? 'mdi-weather-night':'mdi-white-balance-sunny'}} 
   v-main(app)
-    v-container(app class="tw-h-full")
-      router-view
+    router-view
   v-footer(padless)
     v-card(flat tile width="100%" class="tw-text-center")
       v-card-text
         | {{ new Date().getFullYear() }} &mdash; 
         strong Fookie JS
-
 </template>       
 <script>
 export default {
@@ -27,6 +25,9 @@ export default {
     return {
       darkmode: true,
     };
+  },
+  mounted() {
+    this.$vuetify.theme.dark = true;
   },
   watch: {
     darkmode(val) {
