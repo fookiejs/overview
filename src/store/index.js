@@ -23,7 +23,7 @@ export default new Vuex.Store({
       state.models[payload.model] = payload.response.data;
     },
     create(state, payload) {
-      state.models[payload.model] = state.models[payload.model].filter((i) => i._id != payload.response.data._id);
+      console.log(payload.response.data);
       state.models[payload.model].push(payload.response.data);
     },
     remove(state, payload) {
@@ -64,16 +64,16 @@ export default new Vuex.Store({
         body: payload
       })
 
-      payload.response = await axios.post(`${ctx.state.setting.protocol}://${ctx.state.setting.host}:${ctx.state.setting.port}`, payload, {
+      const apiCall = await axios.post(`${ctx.state.setting.protocol}://${ctx.state.setting.host}:${ctx.state.setting.port}`, payload, {
         headers: {
           token: localStorage.getItem("token")
         }
       })
-
+      payload.response = apiCall.data
       if (payload.method == "read") {
         ctx.state.loadings = lodash.remove(ctx.state.loadings, payload.model)
       }
-      payload.response = payload.response.data
+
       ctx.dispatch("sync", payload)
       return payload.response.data
     },

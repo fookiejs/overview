@@ -31,7 +31,7 @@ v-card
       v-autocomplete(
         v-if="typeof field.relation == 'string'",
         v-model="body[i]",
-        :item-text="display(model.schema)",
+        :item-text="display(relatedModel(field.relation).schema)",
         :items="$store.state.models[field.relation]",
         :label="i",
         :loading="loadings[i]",
@@ -66,6 +66,7 @@ export default {
       patchBody: {},
     };
   },
+  computed: {},
 
   mounted: async function () {
     let vue = this;
@@ -91,11 +92,11 @@ export default {
           vue.body[key] = JSON.parse(vue.body[key]);
         }
       }
-
+      console.log(vue.body);
       await this.$store.dispatch("run", {
-        method: "create",
         model: vue.model.name,
-        body: vue.body,
+        method: "create",
+        body: JSON.parse(JSON.stringify(vue.body)),
       });
     },
     edit: async function () {

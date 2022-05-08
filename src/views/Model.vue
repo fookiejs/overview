@@ -10,6 +10,7 @@ v-tabs
 
 <script>
 import lodash from "lodash";
+import vuetify from "../plugins/vuetify";
 export default {
   data() {
     return {

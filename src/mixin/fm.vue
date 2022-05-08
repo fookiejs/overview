@@ -23,15 +23,22 @@ export default {
   methods: {
     display(schema) {
       const vue = this;
-      let display = vue.database.pk;
       const fields = lodash.keys(schema);
       for (let field of fields) {
-        if (schema[field].type === "string" && schema[field].unique === true) {
-          display = field;
-          break;
+        if (schema[field].type == "string" && schema[field].unique == true) {
+          return field;
+        }
+        if (schema[field].type == "string") {
+          return field;
         }
       }
-      return display;
+      return vue.database.pk;
+    },
+    relatedModel(model) {
+      const vue = this;
+      return lodash.find(vue.$store.state.models.model, {
+        name: model,
+      });
     },
   },
 };

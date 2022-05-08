@@ -19,21 +19,20 @@ export default {
   methods: {},
   computed: {},
   mounted: async function () {
-    this.$store.dispatch("run", {
+    await this.$store.dispatch("run", {
       model: "model",
       method: "read",
     });
-    this.$store.dispatch("run", {
+    await this.$store.dispatch("run", {
       model: "database",
       method: "read",
     });
-    this.$router.push({ name: "model", params: { model: "model" } });
   },
   watch: {
     "$route.params.model": function (newValue, oldValue) {
       let vue = this;
       vue.$store.dispatch("run", {
-        model: vue.$route.params.model,
+        model: newValue,
         method: "read",
       });
     },

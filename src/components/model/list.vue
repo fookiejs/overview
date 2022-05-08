@@ -9,7 +9,7 @@ div
               th(v-for="key in schema_keys") {{ key }}
           tbody
             tr(
-              v-for="object in $store.state.models[model.name]",
+              v-for="object in models[model.name]",
             )
               td(v-for="key_1 in schema_keys")
                 f-model-field(:entity="object" :field="model.schema[key_1]" :k="key_1") {{ object[key_1] }}
